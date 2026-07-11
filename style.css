@@ -1,0 +1,185 @@
+/* --- THEME PARADIGM --- */
+:root {
+    --deep-void: #0a110d;
+    --emerald-glow: #00f5d4;
+    --jungle-leaf: #132a13;
+    --gold: #ffee32;
+    --gold-glow: #ffac1c;
+    --parchment: #fbe9d0;
+    --blood-ruby: #9b2226;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0; padding: 0;
+}
+
+body {
+    background: radial-gradient(circle, #1a3a2a 0%, #050f0a 100%);
+    color: var(--parchment);
+    font-family: 'Philosopher', sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    overflow: hidden;
+}
+
+/* --- THE GAME CONTAINER --- */
+.game-container {
+    width: 95%;
+    max-width: 950px;
+    background: linear-gradient(rgba(10, 17, 13, 0.9), rgba(19, 42, 19, 0.95)),
+                url('https://images.unsplash.com/photo-1502082553048-f009c37129b9?q=80&w=1000') center/cover;
+    border: 4px solid var(--gold-glow);
+    border-radius: 20px;
+    box-shadow: 0 0 50px rgba(0, 245, 212, 0.2), inset 0 0 20px rgba(255, 172, 28, 0.3);
+    padding: 30px;
+    position: relative;
+    overflow: hidden;
+    min-height: 600px;
+    display: flex;
+    flex-direction: column;
+}
+
+/* --- SCREEN SHAKE & EFFECTS --- */
+@keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    20%, 60% { transform: translateX(-10px); }
+    40%, 80% { transform: translateX(10px); }
+}
+.shake { animation: shake 0.4s ease-in-out; border-color: var(--blood-ruby) !important; }
+
+/* --- HUD --- */
+.hud {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 2px solid rgba(255, 238, 50, 0.2);
+    padding-bottom: 15px;
+    margin-bottom: 20px;
+}
+.pirate-logo {
+    font-family: 'Cinzel', serif;
+    font-size: 20px;
+    letter-spacing: 2px;
+    color: var(--emerald-glow);
+    text-shadow: 0 0 10px rgba(0, 245, 212, 0.6);
+}
+.stats-panel { display: flex; gap: 15px; align-items: center; }
+.stat-box {
+    background: rgba(0,0,0,0.6);
+    padding: 6px 16px;
+    border-radius: 30px;
+    border: 1px solid var(--gold);
+    font-weight: bold;
+}
+
+/* --- PAGES SETUP --- */
+.page { display: none; flex-direction: column; align-items: center; flex-grow: 1; justify-content: center; }
+.page.active { display: flex; animation: fadeIn 0.6s ease-in-out forwards; }
+@keyframes fadeIn { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: translateY(0); } }
+
+.magic-text {
+    font-family: 'Cinzel', serif;
+    font-size: 40px;
+    background: linear-gradient(var(--gold), var(--gold-glow));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    text-shadow: 0 4px 10px rgba(0,0,0,0.5);
+    margin-bottom: 15px;
+    text-align: center;
+}
+.lore-text { max-width: 600px; text-align: center; font-size: 18px; line-height: 1.6; color: #cbd5e1; margin-bottom: 30px; }
+
+/* --- BUTTONS --- */
+.btn {
+    background: linear-gradient(135deg, var(--gold-glow), #d47a00);
+    color: #000; font-family: 'Cinzel', serif; font-weight: 900;
+    padding: 12px 35px; border: 2px solid var(--gold); border-radius: 50px;
+    cursor: pointer; box-shadow: 0 4px 15px rgba(255,172,28,0.4);
+    transition: all 0.3s ease; text-transform: uppercase; letter-spacing: 1px;
+}
+.btn:hover { transform: scale(1.05); box-shadow: 0 0 20px var(--emerald-glow); color: #fff; }
+.btn-shop { background: #00b4d8; color: #fff; border-color: #90e0ef; box-shadow: none; }
+.btn-cast { background: linear-gradient(135deg, var(--emerald-glow), #00b4d8); margin-top: 10px; }
+
+/* --- SETUP & GRAPHICAL CSS AVATAR ENGINE --- */
+.setup-layout { display: flex; gap: 40px; align-items: center; margin-top: 20px; width: 100%; justify-content: center; }
+.setup-controls { display: flex; flex-direction: column; gap: 15px; }
+input[type="text"], select {
+    padding: 12px; background: rgba(0,0,0,0.5); border: 2px solid var(--gold-glow);
+    border-radius: 8px; color: #fff; font-size: 16px; width: 280px; text-align: center; outline: none;
+}
+input[type="text"]:focus { border-color: var(--emerald-glow); box-shadow: 0 0 10px var(--emerald-glow); }
+
+/* THE PAPER DOLL FRAMEWORK */
+.avatar-frame {
+    background: rgba(0,0,0,0.4); border: 3px double var(--gold);
+    padding: 15px; border-radius: 12px; display: flex; flex-direction: column; align-items: center;
+}
+.avatar-title { font-family: 'Cinzel', serif; color: var(--gold); font-size: 14px; margin-bottom: 10px; }
+.avatar-display {
+    position: relative; width: 140px; height: 180px;
+    background: radial-gradient(#2d6a4f, #132a13); border-radius: 10px; overflow: hidden;
+    border: 1px solid rgba(255,255,255,0.2);
+}
+.av-layer { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background-repeat: no-repeat; background-position: center; transition: all 0.3s ease; }
+.av-body { z-index: 1; display: flex; justify-content: center; align-items: center; font-size: 60px; filter: grayscale(1); opacity: 0.25; }
+
+/* VISUAL RE-PAINTING VIA CSS PSEUDO-ELEMENTS (NO IMAGES NEEDED!) */
+.av-hair { z-index: 4; top: 30px; left: 45px; width: 50px; height: 30px; border-radius: 20px 20px 0 0; }
+.av-torso { z-index: 3; top: 75px; left: 40px; width: 60px; height: 45px; border-radius: 6px; }
+.av-legs { z-index: 2; top: 120px; left: 45px; width: 50px; height: 45px; border-radius: 4px; }
+
+/* DEFAULT/STARTER STYLES */
+.default-hair { background: #4a3728; box-shadow: inset 0 0 10px rgba(0,0,0,0.5); }
+.ragged-cloth { background: #7f5539; border: 1px solid #704729; }
+.worn-trousers { background: #4e525a; }
+
+/* --- MAP EXPEDITION TRACKER --- */
+.jungle-map-container {
+    width: 100%; max-width: 650px; height: 80px; background: rgba(0,0,0,0.6);
+    border-radius: 50px; border: 2px dashed var(--gold-glow); margin: 20px 0;
+    position: relative; display: flex; justify-content: space-between; align-items: center; padding: 0 40px;
+}
+.map-path-line { position: absolute; left: 40px; right: 40px; height: 4px; background: rgba(255,255,255,0.1); z-index: 1; }
+.node {
+    width: 45px; height: 45px; background: #1a3a2a; border: 2px solid #555;
+    border-radius: 50%; display: flex; justify-content: center; align-items: center;
+    font-size: 20px; z-index: 2; transition: all 0.4s ease; position: relative;
+}
+.node.active { border-color: var(--emerald-glow); box-shadow: 0 0 15px var(--emerald-glow); background: #004b23; }
+.node::after {
+    content: attr(data-name); position: absolute; bottom: -25px; font-size: 11px;
+    white-space: nowrap; color: #a1a1aa; font-family: sans-serif;
+}
+.player-token {
+    position: absolute; left: 40px; top: 18px; font-size: 35px; z-index: 3;
+    transition: all 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    filter: drop-shadow(0 0 8px var(--gold));
+}
+
+/* --- THE RIDDLE DISK --- */
+.zone-banner { color: var(--emerald-glow); font-family: 'Cinzel', serif; margin-bottom: 10px; font-size: 18px; letter-spacing: 1px; }
+.riddle-box {
+    width: 100%; max-width: 650px; background: rgba(0, 0, 0, 0.7); border-left: 5px solid var(--gold);
+    padding: 25px; border-radius: 0 15px 15px 0; font-size: 21px; font-style: italic;
+    line-height: 1.5; text-align: center; margin-bottom: 25px; box-shadow: 0 10px 20px rgba(0,0,0,0.5);
+}
+
+/* --- THE CAMP SHOP OVERLAY --- */
+.shop-overlay {
+    display: none; position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+    background: rgba(5, 15, 10, 0.98); color: var(--parchment); z-index: 100;
+    padding: 30px; flex-direction: column; animation: fadeIn 0.3s ease;
+}
+.shop-header { display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid var(--emerald-glow); padding-bottom: 10px; }
+.btn-close { background: none; border: none; color: #fff; font-size: 35px; cursor: pointer; }
+.shop-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 15px; margin-top: 20px; overflow-y: auto; }
+.shop-item {
+    background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 10px; padding: 15px; display: flex; flex-direction: column; align-items: center; gap: 8px; transition: all 0.2s;
+}
+.shop-item.owned { border-color: var(--emerald-glow); background: rgba(0,245,212,0.03); }
+.item-color-preview { width: 35px; height: 35px; border-radius: 6px; border: 2px solid #fff; box-shadow: 0 0 10px rgba(0,0,0,0.5); }
