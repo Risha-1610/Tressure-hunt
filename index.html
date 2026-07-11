@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Whispering Canopy: Lost City Chronicles</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;900&family=Philosopher:ital,wght@0,400;1,700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+<div class="game-container" id="game-container">
+    <div class="magic-glow"></div>
+
+    <div class="hud">
+        <div class="pirate-logo">✨ THE WHISPERING CANOPY</div>
+        <div class="stats-panel">
+            <div class="stat-box coins-pop">🪙 <span id="hud-coins">0</span></div>
+            <div class="stat-box">🔮 <span id="hud-xp">0</span> XP</div>
+            <button class="btn btn-shop" id="hud-shop-btn" onclick="toggleShop()" style="display:none;">⛺ Visit Camp Shop</button>
+        </div>
+    </div>
+
+    <div id="page-home" class="page active">
+        <h1 class="magic-text">The Lost City of Aztec Gold</h1>
+        <p class="lore-text">The jungle breathes. The trees whisper ancient riddles to block your path. Step forward, explorer, but beware—the deeper you venture, the more the ruins demand your wits to survive.</p>
+        <button class="btn pulse" onclick="goToPage('setup')">Awaken the Map</button>
+    </div>
+
+    <div id="page-setup" class="page">
+        <h1 class="magic-text">Conjure Your Explorer</h1>
+        <div class="setup-layout">
+            <div class="setup-controls">
+                <input type="text" id="player-name" placeholder="Name your avatar..." autocomplete="off">
+                <select id="player-gender" onchange="updateGenderVoice()">
+                    <option value="Explorer">Select Class Archetype</option>
+                    <option value="Mage">Shadow Pathfinder</option>
+                    <option value="Rogue">Jungle Corsair</option>
+                    <option value="Scholar">Mystic Runekeeper</option>
+                </select>
+                <button class="btn" onclick="startGame()">Step Into the Emerald Rift</button>
+            </div>
+
+            <div class="avatar-frame">
+                <div class="avatar-title" id="avatar-name-tag">Explorer</div>
+                <div class="avatar-display">
+                    <div id="av-hair" class="av-layer av-hair default-hair"></div>
+                    <div id="av-torso" class="av-layer av-torso ragged-cloth"></div>
+                    <div id="av-legs" class="av-layer av-legs worn-trousers"></div>
+                    <div id="av-body" class="av-layer av-body">👤</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="page-game" class="page">
+        <div class="jungle-map-container">
+            <div class="map-path-line"></div>
+            <div class="node active" id="node-0" data-name="Jungle Entrance">🌳</div>
+            <div class="node" id="node-1" data-name="Whispering Swamps">💀</div>
+            <div class="node" id="node-2" data-name="Forgotten Temple">🏛️</div>
+            <div class="node" id="node-3" data-name="The Sunken Gates">🔱</div>
+            <div class="player-token" id="player-token">🧭</div>
+        </div>
+        
+        <h2 id="jungle-depth-title" class="zone-banner">Entering the Ruins...</h2>
+        
+        <div id="riddle-box" class="riddle-box">The forest remains silent...</div>
+        
+        <div class="input-glow-wrapper">
+            <input type="text" id="riddle-answer" placeholder="Speak the password to the ruins..." autocomplete="off">
+        </div>
+        <button class="btn btn-cast" onclick="checkAnswer()">Cast Word of Power</button>
+        <p id="game-feedback" class="feedback-text"></p>
+    </div>
+
+    <div id="page-win" class="page">
+        <h1 class="magic-text title-win">🏆 THE VAULT IS OPENED!</h1>
+        <p class="lore-text">The gold arrays pulse with blinding light. You have conquered the ruins!</p>
+        <div class="scroll-certificate">
+            <h2>LEGENDARY CHRONICLE</h2>
+            <p>Let it be known across the seas that <strong id="cert-name">Hero</strong> cracked the cipher of the Deep Wood.</p>
+            <div class="cert-stats">
+                <span>Wealth: <strong id="cert-coins">0</strong> Gold Pieces</span>
+                <span>Enlightenment: <strong id="cert-xp">0</strong> Arcane XP</span>
+            </div>
+        </div>
+        <button class="btn" onclick="restartGame()">Re-enter the Illusion</button>
+    </div>
+
+    <div id="shop-overlay" class="shop-overlay">
+        <div class="shop-header">
+            <h2>⛺ Mystic Nomad Outpost</h2>
+            <button class="btn-close" onclick="toggleShop()">×</button>
+        </div>
+        <p style="color: var(--gold); font-size: 14px; margin-bottom: 15px;">Trade your hard-earned gold for enchanted cosmetic relics. Your avatar updates live!</p>
+        <div class="shop-grid" id="shop-items-container">
+            </div>
+    </div>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>
